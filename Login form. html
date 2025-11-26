@@ -1,311 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Animated Registration Form</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Registration Form</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-<style>
+  <style>
+    :root {
+      --font-family: 'Roboto', sans-serif;
+      --bg-color: #eef2f5;
+      --text-color: #333;
+      --container-bg: #ffffff;
+      --accent-color: #007bff;
+      --input-bg: #f8f9fa;
+      --input-border: #dee2e6;
+      --shadow-light: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --error-color: #dc3545;
+      --success-bg: #d4edda;
+      --success-text: #155724;
+      --toggle-color: #333;
+    }
 
-/* ---------- BASE ---------- */
-*{
-    margin:0; padding:0;
-    box-sizing:border-box;
-    font-family:Poppins, sans-serif;
-}
+    body.dark-mode {
+      --bg-color: #1a1a2e;
+      --text-color: #f1f1f1;
+      --container-bg: #2c2c44;
+      --accent-color: #4a90e2;
+      --input-bg: #3c3c5c;
+      --input-border: #555;
+      --shadow-light: 0 10px 30px rgba(0, 0, 0, 0.4);
+      --error-color: #ff6b6b;
+      --success-bg: #234d20;
+      --success-text: #a8e6cf;
+      --toggle-color: #f1f1f1;
+    }
 
-body{
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#0a0a0f;
-    transition:0.4s;
-}
-
-/* ---------- THEME TOGGLE ---------- */
-.theme-toggle{
-    position:fixed;
-    top:20px;
-    right:20px;
-    font-size:20px;
-    background:#111;
-    color:#0ff;
-    border:1px solid #0ff;
-    padding:8px 14px;
-    border-radius:10px;
-    cursor:pointer;
-    transition:0.3s;
-}
-.theme-toggle:hover{
-    box-shadow:0 0 10px #0ff;
-}
-
-/* ---------- CONTAINER ---------- */
-.container{
-    width:350px;
-    padding:35px;
-    background:#111;
-    border-radius:20px;
-    box-shadow:0 0 25px #0ff;
-    animation:fadeIn 0.6s ease;
-}
-
-@keyframes fadeIn {
-    from{opacity:0; transform:translateY(20px);}
-    to{opacity:1; transform:translateY(0);}
-}
-
-/* ---------- TITLE ---------- */
-h2{
-    color:#0ff;
-    text-align:center;
-    margin-bottom:25px;
-    letter-spacing:1px;
-}
-
-/* ---------- FLOATING INPUT ---------- */
-.input-group{
-    position:relative;
-    margin-bottom:25px;
-}
-
-input{
-    width:100%;
-    padding:12px;
-    background:transparent;
-    border:1px solid #0ff;
-    border-radius:10px;
-    color:#0ff;
-    outline:none;
-    font-size:15px;
-    transition:0.3s;
-}
-
-input:focus{
-    box-shadow:0 0 12px #0ff;
-}
-
-label{
-    position:absolute;
-    top:50%;
-    left:14px;
-    transform:translateY(-50%);
-    color:#888;
-    pointer-events:none;
-    transition:0.3s;
-}
-
-/* ------ FLOATING ANIMATION ------ */
-input:focus + label,
-input:not(:placeholder-shown) + label{
-    top:-8px;
-    left:10px;
-    background:#111;
-    padding:0 5px;
-    color:#0ff;
-    font-size:12px;
-}
-
-/* ---------- PASSWORD STRENGTH METER ---------- */
-.strength-bar{
-    height:6px;
-    width:100%;
-    border-radius:5px;
-    background:#222;
-    margin-top:5px;
-    overflow:hidden;
-}
-.strength-level{
-    height:100%;
-    width:0%;
-    transition:0.4s;
-}
-
-/* ---------- SMALL TEXT ---------- */
-.requirements{
-    color:#aaa;
-    font-size:13px;
-    margin-top:5px;
-}
-
-/* ---------- BUTTON ---------- */
-button{
-    width:100%;
-    padding:12px;
-    margin-top:15px;
-    background:#0ff;
-    border:none;
-    color:#000;
-    border-radius:10px;
-    font-size:16px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
-}
-button:disabled{
-    background:#444;
-    cursor:not-allowed;
-}
-button:hover:not(:disabled){
-    box-shadow:0 0 15px #0ff;
-}
-
-/* ---------- SUCCESS POPUP ---------- */
-.popup{
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%) scale(0.6);
-    background:#0ff;
-    padding:25px;
-    border-radius:15px;
-    color:#000;
-    font-size:18px;
-    font-weight:bold;
-    display:none;
-    box-shadow:0 0 25px #0ff;
-    animation:pop 0.4s ease;
-}
-@keyframes pop {
-    from{transform:translate(-50%, -50%) scale(0.5); opacity:0;}
-    to{transform:translate(-50%, -50%) scale(1); opacity:1;}
-}
-
-/* ---------- LIGHT THEME ---------- */
-.light{
-    background:#e8f6ff;
-}
-.light .container{
-    background:white;
-    box-shadow:0 0 15px #00aaff;
-}
-.light h2{
-    color:#00aaff;
-}
-.light input{
-    border-color:#00aaff;
-    color:#00aaff;
-}
-.light input:focus{
-    box-shadow:0 0 10px #00aaff;
-}
-.light label{
-    color:#555;
-}
-.light .theme-toggle{
-    background:white;
-    color:#00aaff;
-    border-color:#00aaff;
-}
-.light button{
-    background:#00aaff;
-}
-.light .popup{
-    background:#00aaff;
-}
-
-</style>
+    * { box-sizing: border-box; transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s; }
+    body { margin:0; font-family: var(--font-family); background: var(--bg-color); color: var(--text-color); display:flex; justify-content:center; align-items:center; min-height:100vh; padding:20px;}
+    
+    .form-container { background: var(--container-bg); padding:40px; width:100%; max-width:400px; border-radius:15px; box-shadow: var(--shadow-light); animation: fadeIn 0.5s ease-out;}
+    @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+    
+    h2 { text-align:center; margin-bottom:30px; font-weight:700; color: var(--accent-color);}
+    .form-group { margin-bottom:25px; display:flex; flex-direction:column; }
+    label { margin-bottom:8px; font-weight:400; font-size:0.95rem;}
+    
+    input { padding:12px 15px; border:1px solid var(--input-border); border-radius:8px; background: var(--input-bg); color: var(--text-color); outline:none; font-size:1rem; }
+    input:focus { border-color: var(--accent-color); box-shadow:0 0 0 3px rgba(0,123,255,0.2);}
+    
+    .error { font-size:0.8rem; color: var(--error-color); margin-top:5px; height:16px;}
+    
+    .submit-btn { width:100%; padding:12px; background: var(--accent-color); color: var(--container-bg); border:none; border-radius:8px; cursor:pointer; font-size:1.1rem; margin-top:15px; font-weight:700; box-shadow:0 4px 10px rgba(0,123,255,0.3); transition:0.3s ease, transform 0.1s;}
+    .submit-btn:hover { background:#0056b3; box-shadow:0 6px 15px rgba(0,123,255,0.4);}
+    .submit-btn:active { transform: translateY(1px);}
+    
+    .success { margin-top:20px; padding:15px; background: var(--success-bg); color: var(--success-text); border-radius:8px; font-size:1rem; text-align:center; font-weight:700; display:none; animation: popIn 0.4s ease-out;}
+    @keyframes popIn { from { transform: scale(0.9); opacity: 0;} to { transform: scale(1); opacity:1;}}
+    
+    #toggleThemeBtn { position:fixed; top:20px; right:20px; width:40px; height:40px; background: var(--container-bg); color: var(--toggle-color); border:1px solid var(--input-border); border-radius:50%; cursor:pointer; font-size:1.2rem; display:flex; justify-content:center; align-items:center; z-index:1000; box-shadow:0 2px 8px rgba(0,0,0,0.1); transition:0.3s ease;}
+    #toggleThemeBtn:hover { background: var(--accent-color); color:#fff; border-color: var(--accent-color); transform:rotate(15deg);}
+    
+    .password-group .password-wrapper { display:flex; align-items:center; position:relative; }
+    .password-wrapper input { padding-right:55px; }
+    .toggle-password { position:absolute; right:1px; height:95%; padding:0 10px; border:none; background:transparent; color: var(--accent-color); border-radius:0 8px 8px 0; cursor:pointer; font-size:0.85rem; font-weight:bold; transition:0.15s ease;}
+    .toggle-password:hover { color:#0056b3;}
+    
+    @media (max-width:450px) { .form-container { width:90%; padding:25px 20px; } }
+  </style>
 </head>
 <body>
 
-<!-- THEME TOGGLE -->
-<div class="theme-toggle">Toggle Theme</div>
+<button id="toggleThemeBtn" aria-label="Toggle Light/Dark Theme"><i class="fas fa-moon"></i></button>
 
-<!-- FORM -->
-<div class="container">
-    <h2>Create Account</h2>
-
-    <div class="input-group">
-        <input type="text" id="username" placeholder=" " required>
-        <label>Username</label>
+<div class="form-container">
+  <h2>Create Account</h2>
+  <form id="registrationForm" novalidate>
+    <div class="form-group">
+      <label for="fullName">Full Name:</label>
+      <input type="text" id="fullName" name="fullName" placeholder="e.g., John Doe">
+      <span class="error" id="nameError"></span>
     </div>
 
-    <div class="input-group">
-        <input type="email" id="email" placeholder=" " required>
-        <label>Email</label>
+    <div class="form-group">
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" name="email" placeholder="john.doe@example.com">
+      <span class="error" id="emailError"></span>
     </div>
 
-    <div class="input-group">
-        <input type="password" id="password" placeholder=" " required>
-        <label>Password</label>
-
-        <div class="strength-bar">
-            <div class="strength-level" id="strength"></div>
-        </div>
-
-        <div class="requirements" id="reqText">
-            Password must contain uppercase letters, numbers, and special characters.
-        </div>
+    <div class="form-group password-group">
+      <label for="password">Password:</label>
+      <div class="password-wrapper">
+        <input type="password" id="password" name="password" placeholder="Min. 8 chars, 1 Uppercase, 1 Number">
+        <button type="button" id="togglePassword" class="toggle-password">Show</button>
+      </div>
+      <span class="error" id="passwordError"></span>
     </div>
 
-    <button id="registerBtn" disabled>Register</button>
+    <button type="submit" class="submit-btn">Register</button>
+  </form>
+
+  <div id="successMessage" class="success"></div>
 </div>
 
-<!-- SUCCESS POPUP -->
-<div class="popup" id="popup"></div>
-
-
-
-
 <script>
+  const body = document.body;
+  const fullNameInput = document.getElementById("fullName");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const nameError = document.getElementById("nameError");
+  const emailError = document.getElementById("emailError");
+  const passwordError = document.getElementById("passwordError");
+  const form = document.getElementById("registrationForm");
+  const successMessage = document.getElementById("successMessage");
+  const toggleThemeBtn = document.getElementById("toggleThemeBtn");
+  const toggleThemeIcon = toggleThemeBtn.querySelector("i");
+  const togglePasswordBtn = document.getElementById("togglePassword");
 
-/* ---------------- THEME TOGGLE ---------------- */
-document.querySelector(".theme-toggle").onclick = ()=>{
-    document.body.classList.toggle("light");
-};
+  // Theme toggle
+  function updateThemeIcon(isDark) {
+    toggleThemeIcon.classList.toggle('fa-sun', isDark);
+    toggleThemeIcon.classList.toggle('fa-moon', !isDark);
+  }
+  const storedDark = localStorage.getItem('darkMode') === 'true';
+  if (storedDark) body.classList.add("dark-mode");
+  updateThemeIcon(storedDark);
+  toggleThemeBtn.addEventListener("click", () => {
+    const isDark = body.classList.toggle("dark-mode");
+    localStorage.setItem('darkMode', isDark);
+    updateThemeIcon(isDark);
+  });
 
-/* ---------------- VALIDATION ---------------- */
-const username = document.getElementById("username");
-const email = document.getElementById("email");
-const password = document.getElementById("password");
-const btn = document.getElementById("registerBtn");
-const strength = document.getElementById("strength");
+  // Validation
+  function validateForm() {
+    let isValid = true;
+    if (!fullNameInput.value.trim()) { nameError.textContent="Full name is required."; isValid=false; } else nameError.textContent="";
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailInput.value.trim()) { emailError.textContent="Email is required."; isValid=false; } 
+    else if (!emailRegex.test(emailInput.value.trim())) { emailError.textContent="Enter a valid email."; isValid=false; } else emailError.textContent="";
+    const pwd = passwordInput.value.trim();
+    const hasUpper = /[A-Z]/.test(pwd), hasNum = /[0-9]/.test(pwd);
+    if (!pwd) { passwordError.textContent="Password is required."; isValid=false; } 
+    else if (pwd.length<8) { passwordError.textContent="Password must be at least 8 chars."; isValid=false; } 
+    else if (!hasUpper || !hasNum) { passwordError.textContent="Password must contain 1 uppercase & 1 number."; isValid=false; } else passwordError.textContent="";
+    return isValid;
+  }
+  [fullNameInput,emailInput,passwordInput].forEach(inp=>inp.addEventListener("input",validateForm));
 
-function checkInputs(){
-    if(username.value.trim().length > 2 &&
-       email.value.includes("@") &&
-       password.value.length >= 6){
-        btn.disabled = false;
-    } else {
-        btn.disabled = true;
+  // Form submit
+  form.addEventListener("submit", e=>{
+    e.preventDefault();
+    if(validateForm()){
+      const userName = fullNameInput.value.trim().split(' ')[0];
+      successMessage.innerHTML = `🎉 <strong>Congratulations ${userName}!</strong> You've successfully created your account.`;
+      form.style.display="none";
+      successMessage.style.display="block";
     }
-}
+  });
 
-username.oninput = checkInputs;
-email.oninput = checkInputs;
-password.oninput = checkInputs;
-
-/* ---------------- PASSWORD STRENGTH ---------------- */
-password.oninput = ()=>{
-    let p = password.value;
-    let level = 0;
-
-    if(/[A-Z]/.test(p)) level++;
-    if(/[0-9]/.test(p)) level++;
-    if(/[!@#$%^&*]/.test(p)) level++;
-    if(p.length >= 8) level++;
-
-    let width = ["0%", "25%", "50%", "75%", "100%"][level];
-    strength.style.width = width;
-
-    strength.style.background = ["#222","#ff0022","#ff7700","#ffee00","#00ff55"][level];
-};
-
-/* ---------------- SUCCESS POPUP ---------------- */
-btn.onclick = ()=>{
-    const name = username.value;
-    let popup = document.getElementById("popup");
-    popup.innerHTML = `🎉 Congratulations ${name}, your account has been created!`;
-    popup.style.display = "block";
-
-    setTimeout(()=>{
-        popup.style.display = "none";
-    }, 4000);
-};
-
+  // Password toggle
+  togglePasswordBtn.addEventListener("click", ()=>{
+    const isPwd = passwordInput.type==="password";
+    passwordInput.type = isPwd?"text":"password";
+    togglePasswordBtn.textContent = isPwd?"Hide":"Show";
+  });
 </script>
 
 </body>
 </html>
-
